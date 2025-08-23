@@ -1,0 +1,24 @@
+# Ignore virtual environment
+new_env/
+venv/
+.env/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VSCode settings
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Data files (ignore if you don’t want datasets in git)
+*.csv
+*.txt
+
+# Logs
+*.log

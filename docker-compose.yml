@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  mongo-db:
+    image: mongo:4.4
+    container_name: mongo-db
+    hostname: mongo-db
+    ports:
+      - "27017:27017"
+
+  orion:
+    image: fiware/orion
+    container_name: fiware-orion
+    hostname: orion
+    depends_on:
+      - mongo-db
+    ports:
+      - "1026:1026"
+    command: -dbURI mongodb://mongo-db:27017 -logLevel DEBUG
+
+  cygnus:
+    image: fiware/cygnus-ngsi:latest
+    container_name: fiware-cygnus
+    hostname: cygnus
+    depends_on:
+      - mongo-db
+      - orion
+    ports:
+      - "5051:5051"   # NGSI notifications from Orion (changed to avoid Windows 5050 conflict)
+      - "5080:5080"   # Cygnus management API
+    environment:
+      - CYGNUS_MONGO_HOSTS=mongo-db:27017
+      - CYGNUS_MONGO_DB=orion
+      - CYGNUS_SERVICE=default
+      - CYGNUS_SUBSERVICE=/
+      - CYGNUS_LOG_LEVEL=DEBUG
