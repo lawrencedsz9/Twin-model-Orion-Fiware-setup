@@ -41,4 +41,4 @@ with requests.Session() as s:
 
         time.sleep(SLEEP_SECS)
 
-print("Dataset replay finished ✅")
+print("Dataset replay finished")
